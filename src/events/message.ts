@@ -1,8 +1,9 @@
 import IEvent from "../interfaces/event"
-import { Message } from "discord.js";
+import { Message, RichEmbed } from "discord.js";
 import bot from "..";
 import ICommand from "../interfaces/command";
-const { prefix }: { prefix: string } = require('../../config.json');
+import { prefix } from "../../config.json"
+
 
 
 export default class EventMessage implements IEvent {
@@ -14,7 +15,16 @@ export default class EventMessage implements IEvent {
             let cmdName = args.shift().substr(prefix.length);
             let command: ICommand = bot.commands.find((cmd: ICommand) => cmd.basic.aliases.includes(cmdName)) as ICommand;
             if (command) {
-                command.run(message, args)
+                command.run(message, args).catch((reason) => {
+                    let embed: RichEmbed = new RichEmbed()
+                        .setTitle('Error')
+                        .setAuthor(message.member.displayName, message.author.displayAvatarURL)
+                        .setColor("#f54242")
+                        .setDescription(reason);
+                    message.channel.send(embed).then((msg:Message)=>{
+                        msg.delete(32100);
+                    })
+                })
             } else {
                 await message.react('❓')
             }

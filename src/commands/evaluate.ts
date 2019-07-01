@@ -16,20 +16,20 @@ export default class Evaluate implements ICommand {
         }
 
         let evaluated: any = eval(args.join(' '));
-        if (!evaluated) throw 'No code specified';
+        if (args.length==0) throw 'No code specified';
         let embed: RichEmbed = new RichEmbed()
             .setTitle('Evaluated')
             .setAuthor(message.member.displayName, message.author.displayAvatarURL)
             .setColor("#4287f5")
             .setDescription(evaluated);
         message.channel.send(embed).then((m: Message)=>{
-            m.delete(31200);
+            m.delete(30000);
         })
         
     }
     basic = {
         aliases: ['eval'],
-        usage: undefined,
+        description: undefined,
         detailedUsage: undefined
     };
 }

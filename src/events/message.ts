@@ -22,7 +22,7 @@ export default class EventMessage implements IEvent {
                         .setColor("#f54242")
                         .setDescription(reason);
                     message.channel.send(embed).then((msg:Message)=>{
-                        msg.delete(32100);
+                        msg.delete(30000);
                     })
                 })
             } else {

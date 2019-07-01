@@ -2,10 +2,12 @@ import Bot from "../bot"
 // COMMANDS
 
 import Evaluate from "../commands/evaluate"
+import Help from "../commands/help";
 
 export const loadCommands = (bot: Bot): void => {
     bot.commands.push(
-        new Evaluate
+        new Evaluate,
+        new Help
     );
 }
 

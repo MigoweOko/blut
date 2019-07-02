@@ -3,11 +3,13 @@ import Bot from "../bot"
 
 import Evaluate from "../commands/evaluate"
 import Help from "../commands/help";
+import Choose from "../commands/choose";
 
 export const loadCommands = (bot: Bot): void => {
     bot.commands.push(
         new Evaluate,
-        new Help
+        new Help,
+        new Choose
     );
 }
 

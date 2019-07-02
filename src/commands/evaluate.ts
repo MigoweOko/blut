@@ -24,10 +24,10 @@ export default class Evaluate implements ICommand {
             .setAuthor(message.member.displayName, message.author.displayAvatarURL)
             .setColor("#4287f5")
             .setDescription(evaluated);
+
         message.channel.send(embed).then((m: Message) => {
             m.delete(30000);
         })
-
     }
     basic = {
         aliases: ['eval'],

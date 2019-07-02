@@ -1,22 +1,26 @@
 import Bot from "../bot"
-// COMMANDS
+// EVENTS
+import Message from "../events/message"
+import Ready from "../events/ready"
 
+// COMMANDS
 import Evaluate from "../commands/evaluate"
 import Help from "../commands/help";
 import Choose from "../commands/choose";
+import Avatar from "../commands/avatar";
+import Say from "../commands/say";
+import Ping from "../commands/ping";
 
 export const loadCommands = (bot: Bot): void => {
     bot.commands.push(
         new Evaluate,
         new Help,
-        new Choose
+        new Choose,
+        new Avatar,
+        new Say,
+        new Ping
     );
 }
-
-// EVENTS
-
-import Ready from "../events/ready"
-import Message from "../events/message"
 
 export const loadEvents = (bot: Bot): void => {
     bot.events.push(

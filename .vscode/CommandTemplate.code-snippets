@@ -27,7 +27,8 @@
 				"\tbasic = {",
 					"\t\taliases: ['${2:aliases}'],",
 					"\t\tdescription: '${3:Usage}',",
-					"\t\tdetailedUsage: '${4:Detailed}'",
+					"\t\tdetailedUsage: '${4:Detailed}',",
+					"\t\tcategory: '${5:Category}'",
 				"\t};",
 			"}"
 		]

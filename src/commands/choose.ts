@@ -16,6 +16,7 @@ export default class Choose implements ICommand {
     basic = {
         aliases: ['choose'],
         description: 'Let me decide what you choose!\nThe Delimeters are : `; / |`',
-        detailedUsage: 'choose one;two/three|four'
+        detailedUsage: 'choose one;two/three|four',
+        category: "fun"
     };
 }

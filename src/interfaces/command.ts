@@ -6,6 +6,7 @@ export default interface ICommand {
     basic: {
         aliases: string[],
         description: string,
-        detailedUsage: string
+        detailedUsage: string,
+        category: string;
     };
 }

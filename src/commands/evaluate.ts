@@ -32,6 +32,7 @@ export default class Evaluate implements ICommand {
     basic = {
         aliases: ['eval'],
         description: undefined,
-        detailedUsage: undefined
+        detailedUsage: undefined,
+        category: "owner"
     };
 }

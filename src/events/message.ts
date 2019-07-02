@@ -5,14 +5,13 @@ import ICommand from "../interfaces/command";
 import { prefix } from "../../config.json"
 
 
-
 export default class EventMessage implements IEvent {
     async run(message: Message): Promise<void> {
         if (message.author.bot && !message.guild) return;
 
         if (message.content.startsWith(prefix)) {
-            let args = message.content.split(/\ /g);
-            let cmdName = args.shift().substr(prefix.length);
+            let args: string[] = message.content.split(/\ /g);
+            let cmdName: string = args.shift().substr(prefix.length);
             let command: ICommand = bot.commands.find((cmd: ICommand) => cmd.basic.aliases.includes(cmdName)) as ICommand;
             if (command) {
                 command.run(message, args).catch((reason) => {
@@ -21,7 +20,7 @@ export default class EventMessage implements IEvent {
                         .setAuthor(message.member.displayName, message.author.displayAvatarURL)
                         .setColor("#f54242")
                         .setDescription(reason);
-                    message.channel.send(embed).then((msg:Message)=>{
+                    message.channel.send(embed).then((msg: Message) => {
                         msg.delete(30000);
                     })
                 })
@@ -30,5 +29,6 @@ export default class EventMessage implements IEvent {
             }
         }
     };
+
     name: string = 'message';
 }

@@ -21,7 +21,7 @@ export const loadEvents = (bot: Bot): void => {
         new Ready,
         new Message
     );
-    bot.events.forEach((IE) => {
-        bot.client.addListener(IE.name, IE.run);
+    bot.events.forEach((ev) => {
+        bot.client.addListener(ev.name, ev.run);
     })
 }

@@ -4,7 +4,7 @@ import bot from '..';
 
 export default class Help implements ICommand {
     async run(message: Message, args: string[]) {
-        var str = args.join(' ');
+        var str: string = args.join(' ');
 
         let embed: RichEmbed = new RichEmbed()
             .setTitle('Help')
@@ -14,7 +14,7 @@ export default class Help implements ICommand {
         let cmdArgs: { page: string, name: string } = { page: "1", name: undefined };
 
         if (/--\w+\s\S+/g.test(str)) {
-            let regexed = str.match(/--\w+\s\S+/g);
+            let regexed: RegExpMatchArray = str.match(/--\w+\s\S+/g);
             str = str.replace(/--\w+\s\S+/g, '');
 
             regexed.forEach((v) => {
@@ -24,18 +24,28 @@ export default class Help implements ICommand {
             });
         }
 
+        let filteredCommands: ICommand[] = bot.commands.filter((cmd) => !!cmd.basic.description && !!cmd.basic.detailedUsage)
         if (cmdArgs['name']) {
-            let c = bot.commands.find((cmd) => cmd.basic.aliases.includes(cmdArgs['name']))
-            if (c) {
-                embed.addField(c.basic.aliases.join(', '), c.basic.description)
-                .setDescription(c.basic.detailedUsage)
+            let command: ICommand = filteredCommands.find((cmd) => cmd.basic.aliases.includes(cmdArgs['name']))
+            if (command) {
+                embed.addField(command.basic.aliases.join(', '), command.basic.description)
+                    .setDescription(command.basic.detailedUsage)
             } else {
                 throw `Command with name ${cmdArgs['name']} doesnt exists`
             }
-        } else {
-            throw "Help with page doesnt work at the moment, sorry!"
+        } else if (cmdArgs['page']) {
+            let cPp: number = 6;
+
+            let page: number = parseInt(cmdArgs['page']);
+            let pageMinOne: number = page - 1;
+            let commands: ICommand[] = filteredCommands.slice(pageMinOne * cPp, pageMinOne * cPp + cPp)
+
+            commands.forEach((cmd) => {
+                embed.addField(cmd.basic.aliases.join(', '), cmd.basic.description, true)
+            })
+            embed.setFooter(`${page} / ${Math.ceil(filteredCommands.length / cPp)}, available commands: ${filteredCommands.length}`)
         }
-        message.channel.send(embed);
+        await message.channel.send(embed);
     }
     basic = {
         aliases: ['help'],

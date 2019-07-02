@@ -4,9 +4,21 @@ import bot from '..';
 
 export default class Avatar implements ICommand {
     async run(message: Message, args: string[]) {
-        let user: GuildMember = message.mentions.members.first() || message.member;
 
+        let user: GuildMember;
+
+        if (args.length > 0) {
+            user = message.mentions.members.first() ||
+                message.guild.members.find((gm) =>
+                    gm.displayName.toLowerCase().includes(args.join(' ').toLowerCase()) ||
+                    gm.user.username.toLowerCase().includes(args.join(' ').toLowerCase()) ||
+                    gm.user.id.includes(args.join(' '))
+                );
+        }
+        
+        if (!user) user = message.member;
         let av: string = user.user.displayAvatarURL;
+
         let embed: RichEmbed = new RichEmbed()
             .setTitle(av)
             .setURL(av)
@@ -16,7 +28,7 @@ export default class Avatar implements ICommand {
         await message.channel.send(embed);
     }
     basic = {
-        aliases: ['avatar','av'],
+        aliases: ['avatar', 'av'],
         description: 'Gives link to mentioned user avatar or yours',
         detailedUsage: 'avatar @user#1234',
         category: 'utility'

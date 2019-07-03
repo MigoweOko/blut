@@ -8,7 +8,7 @@ export default class Say implements ICommand {
         if (message.deletable) {
             await message.delete();
         }
-        message.channel.send(str)
+        await message.channel.send(str)
     }
     basic = {
         aliases: ['say'],

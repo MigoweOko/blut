@@ -26,7 +26,7 @@ export default class Evaluate implements ICommand {
             .setColor("#4287f5")
             .setDescription(evaluated);
 
-        message.channel.send(embed).then((m: Message) => {
+        await message.channel.send(embed).then((m: Message) => {
             m.delete(30000);
         })
     }

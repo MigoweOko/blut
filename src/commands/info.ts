@@ -1,11 +1,12 @@
 import ICommand from '../interfaces/command';
 import { Message, RichEmbed, User, Permissions } from 'discord.js';
 import bot from '..';
+const { ownerid }: { ownerid: string } = require('../../config.json')
 
 export default class Info implements ICommand {
     async run(message: Message, args: string[]) {
 
-        let author: User = await bot.client.fetchUser("292951899827732480", true)
+        let author: User = await bot.client.fetchUser(ownerid, true)
 
         let perms: number =
             Permissions.FLAGS.ADD_REACTIONS |

@@ -10,7 +10,7 @@ export default class Evaluate implements ICommand {
         if (message.author.id != ownerid) throw "You are not permitted to use evaluate command!";
         this.bot = bot
         let flags = {};
-        if (/^--silent$|^--s$/g.test(flagCmd)) {
+        if (/^-silent$|^-s$/g.test(flagCmd)) {
             flags['silent'] = true
         } else {
             flags['silent'] = false;
@@ -18,6 +18,7 @@ export default class Evaluate implements ICommand {
         }
 
         let evaluated: any = eval(args.join(' '));
+        if (flags['silent']) return;
         if (args.length == 0) throw 'No code specified';
         let embed: RichEmbed = new RichEmbed()
             .setTitle('Evaluated')

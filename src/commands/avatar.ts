@@ -4,7 +4,6 @@ import bot from '..';
 
 export default class Avatar implements ICommand {
     async run(message: Message, args: string[]) {
-
         let user: GuildMember;
 
         if (args.length > 0) {
@@ -15,7 +14,7 @@ export default class Avatar implements ICommand {
                     gm.user.id.includes(args.join(' '))
                 );
         }
-        
+
         if (!user) user = message.member;
         let av: string = user.user.displayAvatarURL;
 
@@ -29,8 +28,8 @@ export default class Avatar implements ICommand {
     }
     basic = {
         aliases: ['avatar', 'av'],
-        description: 'Gives link to mentioned user avatar or yours',
-        detailedUsage: 'avatar @user#1234',
+        description: 'Gives avatar link in Rich Embed',
+        detailedUsage: 'avatar @user#1234\navatar user',
         category: 'utility'
     };
 }

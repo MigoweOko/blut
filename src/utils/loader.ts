@@ -10,6 +10,8 @@ import Choose from "../commands/choose";
 import Avatar from "../commands/avatar";
 import Say from "../commands/say";
 import Ping from "../commands/ping";
+import UserInfo from "../commands/userinfo";
+import Info from "../commands/info";
 
 export const loadCommands = (bot: Bot): void => {
     bot.commands.push(
@@ -18,7 +20,9 @@ export const loadCommands = (bot: Bot): void => {
         new Choose,
         new Avatar,
         new Say,
-        new Ping
+        new Ping,
+        new UserInfo,
+        new Info
     );
 }
 

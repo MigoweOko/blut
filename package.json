@@ -9,7 +9,9 @@
   "author": "MigoweOko",
   "license": "MIT",
   "dependencies": {
+    "@types/mongodb": "^3.1.28",
     "@types/node": "^12.0.10",
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "mongodb": "^3.2.7"
   }
 }

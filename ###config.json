@@ -1,5 +1,6 @@
 {
     "ownerid": "",
     "token": "",
-    "prefix": ""
+    "prefix": "",
+    "mongodbURI": ""
 }

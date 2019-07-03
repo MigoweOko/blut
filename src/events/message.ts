@@ -50,7 +50,7 @@ export default class EventMessage implements IEvent {
                 msgs: 1,
                 exp: experience,
             });
-            console.log(`Inserted new GlobalUser with id ${message.author.id}, tag ${message.author.tag}`);
+            console.log(`Inserted new GuildUser with id ${message.author.id}, tag ${message.author.tag}`);
         } else {
             if (!bot.userCooldowns.find((s) => s.includes(message.author.id)))
                 await bot.GuildUsers.findOneAndUpdate({ id: message.author.id, gid: message.guild.id }, {

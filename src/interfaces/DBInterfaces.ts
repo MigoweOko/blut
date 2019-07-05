@@ -32,3 +32,11 @@ export interface UserActions {
     id: string;
     actions: string[];
 }
+
+export interface Reminder {
+    _id?: string;
+    
+    id: string;
+    content: string;
+    time: number;
+}

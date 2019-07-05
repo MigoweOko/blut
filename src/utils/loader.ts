@@ -13,6 +13,7 @@ import Ping from "../commands/ping";
 import UserInfo from "../commands/userinfo";
 import Info from "../commands/info";
 import EmojiCmd from "../commands/emoji";
+import Remind from "../commands/remind";
 
 export const loadCommands = (bot: Bot): void => {
     bot.commands.push(
@@ -24,7 +25,8 @@ export const loadCommands = (bot: Bot): void => {
         new Ping,
         new UserInfo,
         new Info,
-        new EmojiCmd
+        new EmojiCmd,
+        new Remind
     );
 }
 

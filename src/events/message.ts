@@ -8,7 +8,7 @@ import { GlobalUser, GuildUser } from "../interfaces/DBInterfaces";
 
 export default class EventMessage implements IEvent {
     async run(message: Message): Promise<void> {
-        if (message.author.bot && !message.guild) return;
+        if (message.author.bot || !message.guild) return;
 
         let experience: number = Math.round(Math.random()) + 2
 
@@ -18,7 +18,7 @@ export default class EventMessage implements IEvent {
             console.log(`Timeouted ${message.author.tag}`);
         } else console.log(`${message.author.tag} is typing too fast`);
         setTimeout(() => {
-            bot.userCooldowns.shift();
+            bot.userCooldowns.splice(bot.userCooldowns.findIndex((v)=>v.includes(message.author.id)));
         }, 20000);
 
         let glu: GlobalUser = await bot.GlobalUsers.findOne({ id: message.author.id });

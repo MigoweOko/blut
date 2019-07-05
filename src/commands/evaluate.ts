@@ -6,6 +6,7 @@ import { ownerid } from "../../config.json"
 
 export default class Evaluate implements ICommand {
     bot: Bot;
+    set: {} = {};
     async run(message: Message, [flagCmd, ...args]: string[]) {
         if (message.author.id != ownerid) throw "You are not permitted to use evaluate command!";
         this.bot = bot

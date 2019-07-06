@@ -24,6 +24,7 @@ export interface GlobalUser {
     exp: number;
     id: string;
     cash: number;
+    reps:number;
 }
 
 export interface UserActions {

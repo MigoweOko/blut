@@ -14,11 +14,11 @@ export default class EventMessage implements IEvent {
 
         if (!bot.userCooldowns.find((s) => s.includes(message.author.id))) {
             bot.userCooldowns.push(message.author.id);
-            
+
             console.log(`Timeouted ${message.author.tag}`);
         } else console.log(`${message.author.tag} is typing too fast`);
         setTimeout(() => {
-            bot.userCooldowns.splice(bot.userCooldowns.findIndex((v)=>v.includes(message.author.id)));
+            bot.userCooldowns.splice(bot.userCooldowns.findIndex((v) => v.includes(message.author.id)));
         }, 20000);
 
         let glu: GlobalUser = await bot.GlobalUsers.findOne({ id: message.author.id });
@@ -27,7 +27,8 @@ export default class EventMessage implements IEvent {
                 id: message.author.id,
                 msgs: 1,
                 exp: experience,
-                cash: 0
+                cash: 0,
+                reps: 0
             });
             console.log(`Inserted new GlobalUser with id ${message.author.id}, tag ${message.author.tag}`);
         } else {

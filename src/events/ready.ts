@@ -26,11 +26,10 @@ export default class EventReady implements IEvent {
 
 function sendRemind() {
     bot.Reminders.filter((r) => r.time < Date.now()).forEach(async (reminder) => {
-        let r: Reminder = bot.Reminders.splice(bot.Reminders.indexOf(reminder)).shift()
+        let r: Reminder = bot.Reminders.splice(bot.Reminders.indexOf(reminder),1).shift()
         await bot.RemindersDB.findOneAndDelete(r);
         let user: User = await bot.client.fetchUser(r.id)
-
-        if (user) user.send(`${Math.floor(Math.random() * 100) ? '🔔' : 'BADING DING DONG'} : ${r.content}\n${Math.floor(Math.random() * 1000) ? '' : '~~1 out of 1000 can get this thingless message, you are the one!~~'}`)
+        if (user) await user.send(`${Math.floor(Math.random() * 100) ? '🔔' : 'BADING DING DONG'} : ${r.content}\n${Math.floor(Math.random() * 1000) ? '' : '~~1 out of 1000 can get this thingless message, you are the one!~~'}`)
     })
 }
 

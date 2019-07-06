@@ -7,18 +7,9 @@ import { Reminder } from '../interfaces/DBInterfaces';
 export default class Remind implements ICommand {
     async run(message: Message, args: string[]) {
 
-        let str: string = args.join(' ');
+        let str: string = args.join(' ').replace(/\s+/gi, ' ');
+        args = str.split(' ');
 
-        //Arguments, +
-        let cmdArgs: { arg: string } = { arg: undefined };
-        let regexArgs = /\+\w+\s\S+/g;
-        if (regexArgs.test(str)) {
-            let regexed: RegExpMatchArray = str.match(regexArgs);
-            str = str.replace(regexArgs, '');
-            regexed.forEach((v) => {
-                cmdArgs[v.substring(1, v.indexOf(' '))] = v.substring(v.indexOf(' ') + 1)
-            });
-        }
         //Flags, -
         let cmdFlags: { remove: boolean, add: boolean } = { remove: false, add: false };
         let regexFlags: RegExp = /-\w+/g
@@ -98,7 +89,7 @@ export default class Remind implements ICommand {
     };
 
     async removeReminder(message: Message, args: string[]) {
-        let reminders: Reminder[] = bot.Reminders.filter((r) => r.id == message.author.id)
+        let reminders: Reminder[] = await bot.RemindersDB.find({ id: { $eq: message.author.id } }).toArray() //bot.Reminders.filter((r) => r.id == message.author.id)
         if (reminders.length <= 0) {
             message.channel.send('You dont have any reminders')
             return;

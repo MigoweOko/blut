@@ -24,7 +24,8 @@ export interface GlobalUser {
     exp: number;
     id: string;
     cash: number;
-    reps:number;
+    reps: number;
+    reptimeout: number;
 }
 
 export interface UserActions {
@@ -36,7 +37,7 @@ export interface UserActions {
 
 export interface Reminder {
     _id?: string;
-    
+
     id: string;
     content: string;
     time: number;

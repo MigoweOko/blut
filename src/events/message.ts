@@ -12,13 +12,15 @@ export default class EventMessage implements IEvent {
 
         let experience: number = Math.round(Math.random()) + 2
 
-        if (!bot.userCooldowns.find((s) => s.includes(message.author.id))) {
-            bot.userCooldowns.push(message.author.id);
+        if (!bot.userCooldowns.find((uc) => uc.id.includes(message.author.id))) {
+            bot.userCooldowns.push({ id: message.author.id, lastmsg: Date.now(), timeout: Date.now() });
 
             console.log(`Timeouted ${message.author.tag}`);
-        } else console.log(`${message.author.tag} is typing too fast`);
+        } else {
+
+        }
         setTimeout(() => {
-            bot.userCooldowns.splice(bot.userCooldowns.findIndex((v) => v.includes(message.author.id)));
+            bot.userCooldowns.splice(bot.userCooldowns.findIndex((uc) => uc.id.includes(message.author.id)));
         }, 20000);
 
         let glu: GlobalUser = await bot.GlobalUsers.findOne({ id: message.author.id });
@@ -28,11 +30,12 @@ export default class EventMessage implements IEvent {
                 msgs: 1,
                 exp: experience,
                 cash: 0,
-                reps: 0
+                reps: 0,
+                reptimeout: 0
             });
             console.log(`Inserted new GlobalUser with id ${message.author.id}, tag ${message.author.tag}`);
         } else {
-            if (!bot.userCooldowns.find((s) => s.includes(message.author.id)))
+            if (!bot.userCooldowns.find((uc) => uc.id.includes(message.author.id)))
                 await bot.GlobalUsers.findOneAndUpdate({ id: message.author.id }, {
                     $inc: {
                         msgs: 1,
@@ -40,6 +43,11 @@ export default class EventMessage implements IEvent {
                         cash: 5
                     }
                 });
+            else await bot.GlobalUsers.findOneAndUpdate({ id: message.author.id }, {
+                $inc: {
+                    msgs: 1
+                }
+            });
         }
 
 
@@ -53,13 +61,18 @@ export default class EventMessage implements IEvent {
             });
             console.log(`Inserted new GuildUser with id ${message.author.id}, tag ${message.author.tag}`);
         } else {
-            if (!bot.userCooldowns.find((s) => s.includes(message.author.id)))
+            if (!bot.userCooldowns.find((uc) => uc.id.includes(message.author.id)))
                 await bot.GuildUsers.findOneAndUpdate({ id: message.author.id, gid: message.guild.id }, {
                     $inc: {
                         msgs: 1,
                         exp: experience
                     }
                 });
+            else await bot.GuildUsers.findOneAndUpdate({ id: message.author.id, gid: message.guild.id }, {
+                $inc: {
+                    msgs: 1,
+                }
+            });
         }
 
         if (message.content.startsWith(prefix)) {

@@ -9,7 +9,6 @@ import { GlobalUser, GuildUser, Guild, UserActions, Reminder } from "./interface
 import { Collection, MongoClient, Db as Database } from "mongodb";
 
 export default class Bot {
-    userCooldowns: string[];
 
     client: Client = new Client({ disableEveryone: true });
     commands: ICommand[] = [];
@@ -19,9 +18,10 @@ export default class Bot {
     GuildUsers: Collection<GuildUser>;
     Guilds: Collection<Guild>;
     UsersActions: Collection<UserActions>;
-
     RemindersDB: Collection<Reminder>;
+
     Reminders: Reminder[];
+    userCooldowns: { id: string, lastmsg: number, timeout: number }[];
 
     async start(token: string): Promise<void> {
         process.on('unhandledRejection', console.error);
